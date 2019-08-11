@@ -139,7 +139,7 @@ class Slider extends Component {
 
   render() {
     const { ballon } = this.state;
-    const { renderBallon } = this.props;
+    const { renderBallon, style } = this.props;
     const ballonRenderer = renderBallon || this.renderBallon;
     return (
       <PanGestureHandler
@@ -147,14 +147,17 @@ class Slider extends Component {
         onHandlerStateChange={this.onGestureEvent}
       >
         <Animated.View
-          style={{
-            flex: 1,
-            height: 30,
-            overflow: "visible",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#3330"
-          }}
+          style={[
+            {
+              flex: 1,
+              height: 30,
+              overflow: "visible",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#3330"
+            },
+            style
+          ]}
           onLayout={this.onLayout}
         >
           <Animated.View
@@ -207,11 +210,7 @@ class Slider extends Component {
               ]
             }}
           >
-            {ballonRenderer({
-              show: this.height,
-              text: ballon,
-              translateX: this.clamped_x
-            })}
+            {ballonRenderer({ text: ballon })}
           </Animated.View>
         </Animated.View>
       </PanGestureHandler>
