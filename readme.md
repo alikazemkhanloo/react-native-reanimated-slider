@@ -6,6 +6,12 @@
 ## motivation
 The slider from the react-native is not good for videos/audio players. if you slide it while the player is playing the file. it will jump a lot between where the file is playing right now and where your finger is, producing very bad UX. this libray uses `react-native-reanimated` and `react-native-gesture-hander`  to produce 60 fps animations and stops jumping the slider while sliding.
 
+## known issues
+* the ballon's text get updated when the animated value change. this is a call from native thread to js, and it may take a while. so in slow devices, it may update the text a little late.
+
+* using `min = new Value(0)` and `max = new Value(0)` will crash. if you want to initiate the `max` with 0 and update it later, you have  to set the min to something like `new Value(-0.00000001)` 
+
+
 ## install
 first install and link `react-native-reanimated` and `react-native-gesture-hander` and then install this packeage. ( I know you can install this packeage first :) )
 
@@ -34,7 +40,7 @@ npm i -s react-native-reanimated-slider
 | renderBallon          | ({   show: AnimatedValue,     text:String translateX: AnimatedValue  })=>React.Node | returns a React node to render as a ballon                                  |
 
 
-* note: to avoid crash you should set the min to something like `new Value(-0.00000001)
+
 
 ## Usage
 ```js
