@@ -27,6 +27,7 @@ const {
 const BUBBLE_WIDTH = 100;
 
 class Slider extends Component {
+  ballon = React.createRef();
   constructor(props) {
     const { progress, min, max, cache } = props;
     super(props);
@@ -66,7 +67,9 @@ class Slider extends Component {
         ),
         [
           call([this.value_x], x => {
-            this.setState({ ballon: props.ballon(x[0]) });
+            this.props.setBallonText
+              ? this.props.setBallonText(props.ballon(x[0]))
+              : this.ballon.current.setText(props.ballon(x[0]));
           }),
           cond(
             eq(this.gestureState, State.BEGAN),
@@ -139,7 +142,7 @@ class Slider extends Component {
   };
 
   renderBallon = ({ text }) => {
-    return <Ballon text={text} color="#f3f" />;
+    return <Ballon ref={this.ballon} text={text} color="#f3f" />;
   };
 
   render() {

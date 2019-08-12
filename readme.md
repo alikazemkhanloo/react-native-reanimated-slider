@@ -23,20 +23,20 @@ npm i -s react-native-reanimated-slider
 ```
 
 ## Props
-| prop                  | type                                                                                | description                                                                 |
-| --------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| style                 | Object                                                                              | a style object to supply to container view                                  |
-| minimumTrackTintColor | String                                                                              | color to fill the seekbar                                                   |
-| thumbTintColor        | String                                                                              | color for the ballon                                                        |
-| ballon                | (value)=>String                                                                     | gets the value and returns a String for the ballon to display while sliding |
-| progress              | Animated.Value                                                                      | the current value of the slider                                             |
-| min                   | Animated.Value                                                                      | the minimum value of the slider                                             |
-| cache                 | Animated.Value                                                                      | the cached value                                                            |
-| max                   | Animated.Value                                                                      | the maximum value of the slider                                             |
-| onSlidingStart        | ()=>void                                                                            | callback called when the users starts sliding                               |
-| onSlidingComplete     | (value)=>void                                                                       | callback called when the users stops sliding                                |
-| renderBallon          | ({   show: AnimatedValue,     text:String translateX: AnimatedValue  })=>React.Node | returns a React node to render as a ballon                                  |
-
+| prop                  | type                                                                | description                                                                                                                                                                                                                              |
+| --------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| style                 | Object                                                              | a style object to supply to container view                                                                                                                                                                                               |
+| minimumTrackTintColor | String                                                              | color to fill the seekbar                                                                                                                                                                                                                |
+| thumbTintColor        | String                                                              | color for the ballon                                                                                                                                                                                                                     |
+| ballon                | (value)=>String                                                     | gets the value and returns a String for the ballon to display while sliding                                                                                                                                                              |
+| progress              | Animated.Value                                                      | the current value of the slider                                                                                                                                                                                                          |
+| min                   | Animated.Value                                                      | the minimum value of the slider                                                                                                                                                                                                          |
+| cache                 | Animated.Value                                                      | the cached value                                                                                                                                                                                                                         |
+| max                   | Animated.Value                                                      | the maximum value of the slider                                                                                                                                                                                                          |
+| onSlidingStart        | ()=>void                                                            | callback called when the users starts sliding                                                                                                                                                                                            |
+| onSlidingComplete     | (value)=>void                                                       | callback called when the users stops sliding                                                                                                                                                                                             |
+| renderBallon          | ({   show: AnimatedValue, translateX: AnimatedValue  })=>React.Node | returns a React node to render as a ballon                                                                                                                                                                                               |
+| setBallonText         | text=>void                                                          | if you use custom Ballon renderer you have to supply this prop to set the text inside the ballon. for better performance you better use a `TextInput` and setNativeProps. the `text` argument will be the output from the prop  `ballon` |
 
 
 
@@ -81,3 +81,5 @@ renderBallon=({text})=>(
 | containerStyle | Object | container style                     |
 | color          | string | color of the ballon                 |
 | textStyle      | Object | style of the text inside the ballon |
+
+
