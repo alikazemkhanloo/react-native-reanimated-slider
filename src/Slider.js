@@ -30,17 +30,22 @@ class Slider extends Component {
   constructor(props) {
     const { progress, min, max, cache } = props;
     super(props);
+    this.convert_to_percent = value =>
+      cond(eq(min, max), 0, divide(value, sub(max, min)));
     this.gestureState = new Value(0);
     this.x = new Value(0);
     this.width = new Value(0);
-    this.progress_x = multiply(divide(progress, sub(max, min)), this.width);
-    this.cache_x = multiply(divide(cache, sub(max, min)), this.width);
-
-    this.clamped_x = interpolate(this.x, {
-      inputRange: [-0.000000000001, this.width],
-      outputRange: [-0.000000000001, this.width],
-      extrapolate: Extrapolate.CLAMP
-    });
+    this.progress_x = multiply(this.convert_to_percent(progress), this.width);
+    this.cache_x = multiply(this.convert_to_percent(cache), this.width);
+    this.clamped_x = cond(
+      eq(this.width, 0),
+      0,
+      interpolate(this.x, {
+        inputRange: [0, this.width],
+        outputRange: [0, this.width],
+        extrapolate: Extrapolate.CLAMP
+      })
+    );
     this.value_x = divide(multiply(this.clamped_x, max), this.width);
     this.onGestureEvent = event([
       {
