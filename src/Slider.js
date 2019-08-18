@@ -26,7 +26,21 @@ const {
 
 const BUBBLE_WIDTH = 100;
 
-class Slider extends Component {
+type Props = {
+  /**
+   * renders the ballon
+   */
+  renderBallon: () => any,
+  minimumTrackTintColor: string,
+  maximumTrackTintColor: string,
+  cacheTrackTintColor: string
+};
+class Slider extends Component<Props> {
+  static defaultProps = {
+    minimumTrackTintColor: "#f3f",
+    maximumTrackTintColor: "transparent",
+    cacheTrackTintColor: "#777"
+  };
   ballon = React.createRef();
   constructor(props) {
     const { progress, min, max, cache } = props;
@@ -142,12 +156,19 @@ class Slider extends Component {
   };
 
   renderBallon = ({ text }) => {
-    return <Ballon ref={this.ballon} text={text} color="#f3f" />;
+    return <Ballon ref={this.ballon} text={text} />;
   };
 
   render() {
     const { ballon } = this.state;
-    const { renderBallon, style } = this.props;
+    const {
+      renderBallon,
+      style,
+      minimumTrackTintColor,
+      maximumTrackTintColor,
+      cacheTrackTintColor,
+      borderColor
+    } = this.props;
     const ballonRenderer = renderBallon || this.renderBallon;
     return (
       <PanGestureHandler
@@ -173,15 +194,15 @@ class Slider extends Component {
               width: "100%",
               height: 5,
               borderRadius: 2,
-              borderColor: "#fff",
+              borderColor: borderColor,
               overflow: "hidden",
               borderWidth: 1,
-              backgroundColor: "transparent"
+              backgroundColor: maximumTrackTintColor
             }}
           >
             <Animated.View
               style={{
-                backgroundColor: "#777",
+                backgroundColor: cacheTrackTintColor,
                 height: "100%",
                 width: this.cache_x,
 
@@ -190,7 +211,7 @@ class Slider extends Component {
             />
             <Animated.View
               style={{
-                backgroundColor: "#f3f",
+                backgroundColor: minimumTrackTintColor,
                 height: "100%",
                 maxWidth: "100%",
                 width: this.seek,

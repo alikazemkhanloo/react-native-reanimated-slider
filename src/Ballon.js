@@ -4,7 +4,14 @@ import Animated from "react-native-reanimated";
 
 const BUBBLE_WIDTH = 100;
 
-export default class Ballon extends React.Component {
+type Props = {
+  color: string,
+  text: string
+};
+export default class Ballon extends React.Component<Props> {
+  static defaultProps = {
+    color: "#f3f"
+  };
   text = React.createRef();
   setText = text => {
     this.text.current.setNativeProps({ text });
