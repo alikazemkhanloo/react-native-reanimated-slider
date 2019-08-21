@@ -24,10 +24,14 @@
   },
   "homepage": "https://github.com/alikazemkhanloo/react-native-reanimated-slider#readme",
   "devDependencies": {
+    "component-docs": "^0.20.2",
     "metro-react-native-babel-preset": "^0.55.0"
   },
   "peerDependencies": {
     "react-native-gesture-handler": "^1.x.x",
     "react-native-reanimated": "^1.x.x"
+  },
+  "dependencies": {
+    "core-js": "2"
   }
 }
