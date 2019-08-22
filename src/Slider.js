@@ -39,7 +39,8 @@ class Slider extends Component<Props> {
   static defaultProps = {
     minimumTrackTintColor: "#f3f",
     maximumTrackTintColor: "transparent",
-    cacheTrackTintColor: "#777"
+    cacheTrackTintColor: "#777",
+    borderColor:'#fff'
   };
   ballon = React.createRef();
   constructor(props) {
