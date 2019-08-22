@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Ballon from "./Ballon";
@@ -28,19 +28,75 @@ const BUBBLE_WIDTH = 100;
 
 type Props = {
   /**
-   * renders the ballon
+   * renders the ballon with a text indicating the current value when sliding
    */
-  renderBallon: () => any,
-  minimumTrackTintColor: string,
-  maximumTrackTintColor: string,
-  cacheTrackTintColor: string
+  renderBallon?: string => any,
+  minimumTrackTintColor?: string,
+  maximumTrackTintColor?: string,
+  cacheTrackTintColor?: string,
+  /**
+   * style for the container view
+   */
+  style?: any,
+  /**
+   * color of the border of the slider
+   */
+  borderColor?: string,
+  /**
+   * a function that gets the current value of the slider as you slide it,
+   * and returns a string to be used in the ballon
+   */
+  ballon: number => string,
+
+  /**
+   * an AnimatedValue from `react-native-reanimated` library which is the
+   * current value of the slider.
+   */
+  progress: typeof Animated.Value,
+  /**
+   * an AnimatedValue from `react-native-reanimated` library which is the
+   * curren value of the cache. the cache is optional and will be rendered behind
+   * the main progress indicator.
+   */
+  cache?: typeof Animated.Value,
+  /**
+   * an AnimatedValue from `react-native-reanimated` library which is the
+   * minimum value of the slider.
+   */
+  min: typeof Animated.Value,
+  /**
+   * an AnimatedValue from `react-native-reanimated` library which is the
+   * maximum value of the slider.
+   */
+  max: typeof Animated.Value,
+  /**
+   * callback called when the users starts sliding
+   */
+  onSlidingStart: () => void,
+  /**
+   * callback called when the users stops sliding. the new value will be passed as
+   * argument
+   */
+  onSlidingComplete: number => void,
+  /**
+   * render custom Ballon to show when sliding.
+   */
+  renderBallon?: () => React.ReactNode,
+  /**
+   * this function will be called while sliding, and should set the text inside your custom
+   * ballon.
+   */
+  setBallonText?: string => void
 };
-class Slider extends Component<Props> {
+/**
+ * The slider component
+ */
+class Slider extends React.Component<Props> {
   static defaultProps = {
     minimumTrackTintColor: "#f3f",
     maximumTrackTintColor: "transparent",
     cacheTrackTintColor: "#777",
-    borderColor:'#fff'
+    borderColor: "#fff"
   };
   ballon = React.createRef();
   constructor(props) {
@@ -152,12 +208,12 @@ class Slider extends Component<Props> {
     this.state = { ballon: "" };
   }
 
-  onLayout = ({ nativeEvent }) => {
+  _onLayout = ({ nativeEvent }) => {
     this.width.setValue(nativeEvent.layout.width);
   };
 
-  renderBallon = ({ text }) => {
-    return <Ballon ref={this.ballon} text={text} />;
+  _renderBallon = () => {
+    return <Ballon ref={this.ballon} />;
   };
 
   render() {
@@ -170,7 +226,7 @@ class Slider extends Component<Props> {
       cacheTrackTintColor,
       borderColor
     } = this.props;
-    const ballonRenderer = renderBallon || this.renderBallon;
+    const ballonRenderer = renderBallon || this._renderBallon;
     return (
       <PanGestureHandler
         onGestureEvent={this.onGestureEvent}
@@ -188,7 +244,7 @@ class Slider extends Component<Props> {
             },
             style
           ]}
-          onLayout={this.onLayout}
+          onLayout={this._onLayout}
         >
           <Animated.View
             style={{

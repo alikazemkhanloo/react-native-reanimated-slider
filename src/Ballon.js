@@ -5,17 +5,24 @@ import Animated from "react-native-reanimated";
 const BUBBLE_WIDTH = 100;
 
 type Props = {
-  color: string,
-  text: string
+  /**
+   * background color of the ballon
+   */
+  color: string
 };
 export default class Ballon extends React.Component<Props> {
   static defaultProps = {
     color: "#f3f"
   };
   text = React.createRef();
+
+  /**
+   * sets the text inside the ballon. it uses `setNativeProps` to perform fast while sliding
+   */
   setText = text => {
     this.text.current.setNativeProps({ text });
   };
+
   render() {
     const { containerStyle, color, textStyle } = this.props;
 
