@@ -27,10 +27,6 @@ const {
 const BUBBLE_WIDTH = 100;
 
 type Props = {
-  /**
-   * renders the ballon with a text indicating the current value when sliding
-   */
-  renderBallon?: string => any,
   minimumTrackTintColor?: string,
   maximumTrackTintColor?: string,
   cacheTrackTintColor?: string,
@@ -88,8 +84,51 @@ type Props = {
    */
   setBallonText?: string => void
 };
+
 /**
- * The slider component
+ * The slider component to show progress. you should install and link `react-native-reanimated`
+ * and `react-native-gesture-handler` to be able to use it. All animated values must be imported from
+ * `react-native-reanimated`.
+ *
+ * ## Usage
+ *
+ * ```js
+ * import Slider from 'react-native-reanimated-slider';
+ * ...
+ *
+ * renderBallon=()=>(
+ *  <View>
+ *    <TextInput ref={this.text} />
+ *  </View>
+ * )
+ *
+ * setBallonText=(text)=>{
+ *   this.text.setNativeProps({text})
+ * }
+ *
+ * render(){
+ *   return (
+ *     <Slider
+ *       style={{ flex: 1 }}
+ *       minimumTrackTintColor="#fff"
+ *       thumbTintColor="#fff"
+ *       ballon={value => this.convertSecondToTime(value)}
+ *       progress={this.currentTime}
+ *       min={new Reanimated.Value(0)}
+ *       cache={this.playableDuration}
+ *       max={this.seekableDuration}
+ *       onSlidingStart={this.slidingStart}
+ *       onSlidingComplete={this.slidingComplete}
+ *
+ *       // only if you want to render custom ballon for sliding
+ *       renderBallon={this.renderBallon}
+ *       setBallonText={this.setBallonText}
+ *     />
+ *   )
+ * }
+ * ```
+ *
+ *
  */
 class Slider extends React.Component<Props> {
   static defaultProps = {

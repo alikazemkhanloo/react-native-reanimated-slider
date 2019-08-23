@@ -10,6 +10,9 @@ type Props = {
    */
   color: string
 };
+/**
+ * a component to show text inside a ballon
+ */
 export default class Ballon extends React.Component<Props> {
   static defaultProps = {
     color: "#f3f"
