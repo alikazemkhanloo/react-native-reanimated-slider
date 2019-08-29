@@ -1,4 +1,5 @@
 import * as React from "react";
+import { I18nManager } from "react-native";
 import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Ballon from "./Ballon";
@@ -301,6 +302,7 @@ class Slider extends React.Component<Props> {
                 backgroundColor: cacheTrackTintColor,
                 height: "100%",
                 width: this.cache_x,
+                [I18nManager.isRTL ? "right" : "left"]: 0,
 
                 position: "absolute"
               }}
@@ -311,6 +313,7 @@ class Slider extends React.Component<Props> {
                 height: "100%",
                 maxWidth: "100%",
                 width: this.seek,
+                [I18nManager.isRTL ? "right" : "left"]: 0,
                 position: "absolute"
               }}
             />
@@ -319,7 +322,7 @@ class Slider extends React.Component<Props> {
             style={{
               position: "absolute",
               bottom: 20,
-              left: -50,
+              [I18nManager.isRTL ? "right" : "left"]: -50,
               width: BUBBLE_WIDTH,
               opacity: this.height,
               transform: [
