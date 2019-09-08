@@ -78,7 +78,6 @@ renderBallon=({text})=>(
 
 | prop           | type   | description                         |
 | -------------- | ------ | ----------------------------------- |
-| text           | String | a text to show in ballon            |
 | containerStyle | Object | container style                     |
 | color          | string | color of the ballon                 |
 | textStyle      | Object | style of the text inside the ballon |
