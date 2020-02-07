@@ -37,6 +37,9 @@ npm i -s react-native-reanimated-slider
 | renderBallon          | ()=>React.Node  | returns a React node to render as a ballon                                                                                                                                                                                               |
 | setBallonText         | text=>void      | if you use custom Ballon renderer you have to supply this prop to set the text inside the ballon. for better performance you better use a `TextInput` and setNativeProps. the `text` argument will be the output from the prop  `ballon` |
 
+| renderThumbImage          | ()=>React.Node  | returns a React node to render as a slider thumb                                                                                                                                                                                           |
+| thumbOffset         | text=>void      | offset for the thumb from the end of the seekbar |
+
 
 
 ## Usage
