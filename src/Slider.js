@@ -1,5 +1,5 @@
 import * as React from "react";
-import { I18nManager } from "react-native";
+import { I18nManager, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Ballon from "./Ballon";
@@ -83,7 +83,17 @@ type Props = {
    * this function will be called while sliding, and should set the text inside your custom
    * ballon.
    */
-  setBallonText?: string => void
+  setBallonText?: string => void,
+
+  /**
+   * render custom thumb image.
+   */
+  renderThumbImage?: () => React.ReactNode,
+
+  /**
+   * thumb offset from the end of seek
+   */
+  thumbOffset?: number
 };
 
 /**
@@ -136,7 +146,8 @@ class Slider extends React.Component<Props> {
     minimumTrackTintColor: "#f3f",
     maximumTrackTintColor: "transparent",
     cacheTrackTintColor: "#777",
-    borderColor: "#fff"
+    borderColor: "#fff",
+    thumbOffset: 7
   };
   ballon = React.createRef();
   constructor(props) {
@@ -167,10 +178,8 @@ class Slider extends React.Component<Props> {
         }
       }
     ]);
-
     this.clock = new Clock();
     this.seek = block([
-      // debug("s", this.),
       cond(
         or(
           eq(this.gestureState, State.ACTIVE),
@@ -189,15 +198,18 @@ class Slider extends React.Component<Props> {
           this.clamped_x
         ],
         [
-          cond(eq(this.gestureState, State.END), [
-            set(this.gestureState, State.UNDETERMINED),
-            call([this.value_x], x => props.onSlidingComplete(x[0]))
-          ]),
-          this.progress_x
+          cond(
+            eq(this.gestureState, State.END),
+            [
+              set(this.gestureState, State.UNDETERMINED),
+              call([this.value_x], x => props.onSlidingComplete(x[0])),
+              this.clamped_x
+            ],
+            [this.progress_x]
+          )
         ]
       )
     ]);
-
     this.spring_state = {
       finished: new Value(0),
       velocity: new Value(0),
@@ -222,13 +234,11 @@ class Slider extends React.Component<Props> {
           set(config.toValue, toValue),
           startClock(this.clock)
         ]),
-
         spring(this.clock, this.spring_state, config),
         cond(this.spring_state.finished, [stopClock(this.clock)]),
         this.spring_state.position
       ];
     };
-
     this.height = cond(
       or(
         eq(this.gestureState, State.BEGAN),
@@ -244,34 +254,38 @@ class Slider extends React.Component<Props> {
         this.spring_state.position
       )
     );
-
     this.state = { ballon: "" };
   }
-
   _onLayout = ({ nativeEvent }) => {
     this.width.setValue(nativeEvent.layout.width);
   };
-
   _renderBallon = () => {
     return <Ballon ref={this.ballon} />;
   };
-
+  _renderThumbImage = style => {
+    return <View style={style} />;
+  };
   render() {
     const { ballon } = this.state;
     const {
       renderBallon,
+      renderThumbImage,
       style,
       minimumTrackTintColor,
       maximumTrackTintColor,
       cacheTrackTintColor,
-      borderColor
+      borderColor,
+      thumbOffset
     } = this.props;
+
     const ballonRenderer = renderBallon || this._renderBallon;
+    const thumbRenderer = renderThumbImage || this._renderThumbImage;
+
     return (
       <PanGestureHandler
         onGestureEvent={this.onGestureEvent}
         onHandlerStateChange={this.onGestureEvent}
-      >
+        minDist={0}>
         <Animated.View
           style={[
             {
@@ -284,8 +298,7 @@ class Slider extends React.Component<Props> {
             },
             style
           ]}
-          onLayout={this._onLayout}
-        >
+          onLayout={this._onLayout}>
           <Animated.View
             style={{
               width: "100%",
@@ -295,15 +308,13 @@ class Slider extends React.Component<Props> {
               overflow: "hidden",
               borderWidth: 1,
               backgroundColor: maximumTrackTintColor
-            }}
-          >
+            }}>
             <Animated.View
               style={{
                 backgroundColor: cacheTrackTintColor,
                 height: "100%",
                 width: this.cache_x,
                 [I18nManager.isRTL ? "right" : "left"]: 0,
-
                 position: "absolute"
               }}
             />
@@ -318,6 +329,22 @@ class Slider extends React.Component<Props> {
               }}
             />
           </Animated.View>
+          <Animated.View
+            style={{
+              [I18nManager.isRTL ? "right" : "left"]: sub(
+                this.seek,
+                new Value(thumbOffset)
+              ),
+              position: "absolute"
+            }}>
+            {thumbRenderer({
+              backgroundColor: minimumTrackTintColor,
+              height: 15,
+              width: 15,
+              borderRadius: 30
+            })}
+          </Animated.View>
+
           <Animated.View
             style={{
               position: "absolute",
@@ -336,8 +363,7 @@ class Slider extends React.Component<Props> {
                   scale: this.height
                 }
               ]
-            }}
-          >
+            }}>
             {ballonRenderer({ text: ballon })}
           </Animated.View>
         </Animated.View>
@@ -345,5 +371,4 @@ class Slider extends React.Component<Props> {
     );
   }
 }
-
 export default Slider;
