@@ -210,6 +210,7 @@ class Slider extends React.Component<Props> {
         ]
       )
     ]);
+    this.thumb = sub(this.seek, this.props.thumbOffset);
     this.spring_state = {
       finished: new Value(0),
       velocity: new Value(0),
@@ -331,10 +332,7 @@ class Slider extends React.Component<Props> {
           </Animated.View>
           <Animated.View
             style={{
-              [I18nManager.isRTL ? "right" : "left"]: sub(
-                this.seek,
-                new Value(thumbOffset)
-              ),
+              [I18nManager.isRTL ? "right" : "left"]: this.thumb,
               position: "absolute"
             }}>
             {thumbRenderer({
