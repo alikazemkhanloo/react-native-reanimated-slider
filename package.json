@@ -1,6 +1,6 @@
 {
   "name": "react-native-reanimated-slider",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "a reanimated slider for video players",
   "main": "index.js",
   "scripts": {
