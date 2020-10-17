@@ -86,6 +86,11 @@ type Props = {
   setBallonText?: string => void,
 
   /**
+   * value to pass to the container of the ballon as `translateY`
+   */
+  ballonTranslateY: number,
+
+  /**
    * render custom thumb image.
    */
   renderThumbImage?: () => React.ReactNode,
@@ -147,7 +152,8 @@ class Slider extends React.Component<Props> {
     maximumTrackTintColor: "transparent",
     cacheTrackTintColor: "#777",
     borderColor: "#fff",
-    thumbOffset: 7
+    thumbOffset: 7,
+    ballonTranslateY: -25,
   };
   ballon = React.createRef();
   constructor(props) {
@@ -193,7 +199,7 @@ class Slider extends React.Component<Props> {
           }),
           cond(
             eq(this.gestureState, State.BEGAN),
-            call([this.value_x], () => props.onSlidingStart())
+            call([this.value_x], () => props.onSlidingStart && props.onSlidingStart())
           ),
           this.clamped_x
         ],
@@ -202,7 +208,7 @@ class Slider extends React.Component<Props> {
             eq(this.gestureState, State.END),
             [
               set(this.gestureState, State.UNDETERMINED),
-              call([this.value_x], x => props.onSlidingComplete(x[0])),
+              call([this.value_x], x => props.onSlidingComplete && props.onSlidingComplete(x[0])),
               this.clamped_x
             ],
             [this.progress_x]
@@ -276,6 +282,7 @@ class Slider extends React.Component<Props> {
       maximumTrackTintColor,
       cacheTrackTintColor,
       borderColor,
+      ballonTranslateY,
       thumbOffset
     } = this.props;
 
@@ -346,13 +353,12 @@ class Slider extends React.Component<Props> {
           <Animated.View
             style={{
               position: "absolute",
-              bottom: 20,
               [I18nManager.isRTL ? "right" : "left"]: -50,
               width: BUBBLE_WIDTH,
               opacity: this.height,
               transform: [
                 {
-                  translateY: 0
+                  translateY: ballonTranslateY
                 },
                 {
                   translateX: this.clamped_x
