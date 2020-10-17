@@ -53,6 +53,13 @@ and returns a string to be used in the ballon
 
 
 
+### `ballonTranslateY`
+
+value to pass to the container of the ballon as `translateY`
+
+defaultValue: `-25`
+
+
 ### `borderColor`
 
 color of the border of the slider
