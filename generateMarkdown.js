@@ -53,7 +53,7 @@ function stringOfLength(string, length) {
       '\n' +
       '\n' +
       (prop.description ? prop.description + '\n\n' : '') +
-      (prop.type ? generatePropType(prop.type) : '') +
+      (prop.flowType ? generatePropType(prop.flowType) : '') +
       (prop.defaultValue ? generatePropDefaultValue(prop.defaultValue) : '') +
       '\n'
     );
