@@ -51,7 +51,7 @@ Props
 a function that gets the current value of the slider as you slide it,
 and returns a string to be used in the ballon
 
-type: `signature`
+type: `number => string`
 
 
 ### `ballonTranslateY`
@@ -118,14 +118,14 @@ defaultValue: `"#f3f"`
 callback called when the users stops sliding. the new value will be passed as
 argument
 
-type: `signature`
+type: `number => void`
 
 
 ### `onSlidingStart` (required)
 
 callback called when the users starts sliding
 
-type: `signature`
+type: `() => void`
 
 
 ### `progress` (required)
@@ -140,14 +140,14 @@ type: `Animated.Value`
 
 render custom Ballon to show when sliding.
 
-type: `signature`
+type: `() => React.ReactNode`
 
 
 ### `renderThumbImage`
 
 render custom thumb image.
 
-type: `signature`
+type: `() => React.ReactNode`
 
 
 ### `setBallonText`
@@ -155,7 +155,7 @@ type: `signature`
 this function will be called while sliding, and should set the text inside your custom
 ballon.
 
-type: `signature`
+type: `string => void`
 
 
 ### `style`
