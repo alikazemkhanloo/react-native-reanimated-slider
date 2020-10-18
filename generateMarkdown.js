@@ -24,6 +24,11 @@ function stringOfLength(string, length) {
   
   function generatePropType(type) {
     let values;
+    let name;
+    name = type.name;
+    if(type.name==='signature'){
+      name = type.raw;
+    }
     if (Array.isArray(type.value)) {
       values =
         '(' +
