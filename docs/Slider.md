@@ -51,12 +51,14 @@ Props
 a function that gets the current value of the slider as you slide it,
 and returns a string to be used in the ballon
 
+type: `signature`
 
 
 ### `ballonTranslateY`
 
 value to pass to the container of the ballon as `translateY`
 
+type: `number`
 defaultValue: `-25`
 
 
@@ -64,6 +66,7 @@ defaultValue: `-25`
 
 color of the border of the slider
 
+type: `string`
 defaultValue: `"#fff"`
 
 
@@ -73,10 +76,12 @@ an AnimatedValue from `react-native-reanimated` library which is the
 curren value of the cache. the cache is optional and will be rendered behind
 the main progress indicator.
 
+type: `Animated.Value`
 
 
 ### `cacheTrackTintColor`
 
+type: `string`
 defaultValue: `"#777"`
 
 
@@ -85,10 +90,12 @@ defaultValue: `"#777"`
 an AnimatedValue from `react-native-reanimated` library which is the
 maximum value of the slider.
 
+type: `Animated.Value`
 
 
 ### `maximumTrackTintColor`
 
+type: `string`
 defaultValue: `"transparent"`
 
 
@@ -97,10 +104,12 @@ defaultValue: `"transparent"`
 an AnimatedValue from `react-native-reanimated` library which is the
 minimum value of the slider.
 
+type: `Animated.Value`
 
 
 ### `minimumTrackTintColor`
 
+type: `string`
 defaultValue: `"#f3f"`
 
 
@@ -109,12 +118,14 @@ defaultValue: `"#f3f"`
 callback called when the users stops sliding. the new value will be passed as
 argument
 
+type: `signature`
 
 
 ### `onSlidingStart` (required)
 
 callback called when the users starts sliding
 
+type: `signature`
 
 
 ### `progress` (required)
@@ -122,18 +133,21 @@ callback called when the users starts sliding
 an AnimatedValue from `react-native-reanimated` library which is the
 current value of the slider.
 
+type: `Animated.Value`
 
 
 ### `renderBallon`
 
 render custom Ballon to show when sliding.
 
+type: `signature`
 
 
 ### `renderThumbImage`
 
 render custom thumb image.
 
+type: `signature`
 
 
 ### `setBallonText`
@@ -141,17 +155,20 @@ render custom thumb image.
 this function will be called while sliding, and should set the text inside your custom
 ballon.
 
+type: `signature`
 
 
 ### `style`
 
 style for the container view
 
+type: `any`
 
 
 ### `thumbOffset`
 
 thumb offset from the end of seek
 
+type: `number`
 defaultValue: `7`
 

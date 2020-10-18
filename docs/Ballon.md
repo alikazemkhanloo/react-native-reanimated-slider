@@ -10,5 +10,6 @@ Props
 
 background color of the ballon
 
+type: `string`
 defaultValue: `"#f3f"`
 
