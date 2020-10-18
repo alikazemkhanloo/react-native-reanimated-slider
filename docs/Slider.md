@@ -81,6 +81,8 @@ type: `Animated.Value`
 
 ### `cacheTrackTintColor`
 
+color to fill the cache in the seekbar
+
 type: `string`
 defaultValue: `"#777"`
 
@@ -95,6 +97,8 @@ type: `Animated.Value`
 
 ### `maximumTrackTintColor`
 
+color to fill the background in the seekbar
+
 type: `string`
 defaultValue: `"transparent"`
 
@@ -108,6 +112,8 @@ type: `Animated.Value`
 
 
 ### `minimumTrackTintColor`
+
+color to fill the progress in the seekbar
 
 type: `string`
 defaultValue: `"#f3f"`
