@@ -42,7 +42,7 @@ function stringOfLength(string, length) {
       values = type.value;
     }
   
-    return 'type: `' + type.name + (values ? values : '') + '`\n';
+    return 'type: `' + name + (values ? values : '') + '`\n';
   }
   
   function generatePropDefaultValue(value) {
