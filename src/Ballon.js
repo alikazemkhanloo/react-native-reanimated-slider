@@ -1,6 +1,10 @@
 import React from "react";
 import { TextInput, View } from "react-native";
 import Animated from "react-native-reanimated";
+import type {
+  ViewStyleProp,
+  TextStyleProp,
+} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 const BUBBLE_WIDTH = 100;
 
@@ -8,7 +12,17 @@ type Props = {
   /**
    * background color of the ballon
    */
-  color: string
+  color: string,
+
+  /**
+   * the style for the container view
+   */
+  containerStyle:ViewStyleProp,
+
+  /**
+   * the style for the TextInput inside ballon
+   */
+  textStyle: TextStyleProp,
 };
 /**
  * a component to show text inside a ballon

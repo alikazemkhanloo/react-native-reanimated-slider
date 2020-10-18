@@ -28,8 +28,19 @@ const {
 const BUBBLE_WIDTH = 100;
 
 type Props = {
+  /**
+   * color to fill the progress in the seekbar
+   */
   minimumTrackTintColor?: string,
+
+  /**
+   * color to fill the background in the seekbar
+   */
   maximumTrackTintColor?: string,
+
+  /**
+   * color to fill the cache in the seekbar
+   */
   cacheTrackTintColor?: string,
   /**
    * style for the container view
