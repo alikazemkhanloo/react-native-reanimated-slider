@@ -4,11 +4,11 @@
 
 
 ## motivation
-The slider from the react-native is not good for video/audio players. If you slide it while the player is playing the file, It will jump a lot between where the file is playing right now and where your finger is, producing very bad UX. this libray uses `react-native-reanimated` and `react-native-gesture-hander`  to produce 60 fps animations and stops jumping the slider while sliding.
+The slider from the react-native is not good for video/audio players. If you slide it while the player is playing the file, It will jump a lot between where the file is playing right now and where your finger is, producing very bad UX. this libray uses `react-native-reanimated` and `react-native-gesture-handler`  to produce 60 fps animations and stops jumping the slider while sliding.
 
 
 ## install
-first install and link `react-native-reanimated` and `react-native-gesture-hander` and then install this packeage. ( I know you can install this packeage first :) )
+first install and link `react-native-reanimated` and `react-native-gesture-handler` and then install this packeage. ( I know you can install this packeage first :) )
 
 ```
 yarn add react-native-reanimated-slider
