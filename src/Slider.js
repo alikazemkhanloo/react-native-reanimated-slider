@@ -19,7 +19,7 @@ const {
   Clock,
   divide,
   call,
-  interpolate,
+  interpolateNode,
   multiply,
   block,
   or
@@ -52,9 +52,10 @@ type Props = {
   borderColor?: string,
   /**
    * a function that gets the current value of the slider as you slide it,
-   * and returns a string to be used in the ballon
+   * and returns a string to be used inside the ballon. if not provided it will use the 
+   * current value as integer.
    */
-  ballon: number => string,
+  ballon?: number => string,
 
   /**
    * an AnimatedValue from `react-native-reanimated` library which is the
@@ -180,7 +181,7 @@ class Slider extends React.Component<Props> {
     this.clamped_x = cond(
       eq(this.width, 0),
       0,
-      interpolate(this.x, {
+      interpolateNode(this.x, {
         inputRange: [0, this.width],
         outputRange: [0, this.width],
         extrapolate: Extrapolate.CLAMP
@@ -205,8 +206,8 @@ class Slider extends React.Component<Props> {
         [
           call([this.value_x], x => {
             this.props.setBallonText
-              ? this.props.setBallonText(props.ballon(x[0]))
-              : this.ballon.current.setText(props.ballon(x[0]));
+              ? this.props.setBallonText(props.ballon? props.ballon(x[0]) : x[0].toFixed())
+              : this.ballon.current.setText(props.ballon? props.ballon(x[0]) : x[0].toFixed());
           }),
           cond(
             eq(this.gestureState, State.BEGAN),
