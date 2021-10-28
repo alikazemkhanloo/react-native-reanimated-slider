@@ -9,47 +9,60 @@ and `react-native-gesture-handler` to be able to use it. All animated values mus
 
 ```js
 import Slider from 'react-native-reanimated-slider';
+import { Value } from 'react-native-reanimated';
 ...
+
+const textRef = useRef()
 
 renderBallon=()=>(
  <View>
-   <TextInput ref={this.text} />
+   <TextInput ref={textRef} />
  </View>
 )
 
 setBallonText=(text)=>{
-  this.text.setNativeProps({text})
+  textRef.setNativeProps({text})
 }
 
-render(){
+currentTime= new Value(10)
+playableDuration= new Value(15)
+seekableDuration= new Value(20)
+
+const slidingStart = ()=>{
+ console.log('slide started')
+}
+const slidingComplete = (number)=>{
+ console.log('slide completed' + number)
+}
+...
   return (
     <Slider
       style={{ flex: 1 }}
       minimumTrackTintColor="#fff"
-      thumbTintColor="#fff"
-      ballon={value => this.convertSecondToTime(value)}
-      progress={this.currentTime}
+      thumbTintColor="#f00"
+      borderColor="#0f0"
+      progress={currentTime}
       min={new Reanimated.Value(0)}
-      cache={this.playableDuration}
-      max={this.seekableDuration}
-      onSlidingStart={this.slidingStart}
-      onSlidingComplete={this.slidingComplete}
+      cache={playableDuration}
+      max={seekableDuration}
+      onSlidingStart={slidingStart}
+      onSlidingComplete={slidingComplete}
 
       // only if you want to render custom ballon for sliding
-      renderBallon={this.renderBallon}
-      setBallonText={this.setBallonText}
+      // renderBallon={this.renderBallon}
+      // setBallonText={this.setBallonText}
     />
   )
-}
 ```
 
 Props
 -----
 
-### `ballon` (required)
+### `ballon`
 
 a function that gets the current value of the slider as you slide it,
-and returns a string to be used in the ballon
+and returns a string to be used inside the ballon. if not provided it will use the 
+current value as integer.
 
 type: `number => string`
 

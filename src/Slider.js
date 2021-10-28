@@ -19,7 +19,7 @@ const {
   Clock,
   divide,
   call,
-  interpolate,
+  interpolateNode,
   multiply,
   block,
   or
@@ -52,9 +52,10 @@ type Props = {
   borderColor?: string,
   /**
    * a function that gets the current value of the slider as you slide it,
-   * and returns a string to be used in the ballon
+   * and returns a string to be used inside the ballon. if not provided it will use the 
+   * current value as integer.
    */
-  ballon: number => string,
+  ballon?: number => string,
 
   /**
    * an AnimatedValue from `react-native-reanimated` library which is the
@@ -121,38 +122,50 @@ type Props = {
  *
  * ```js
  * import Slider from 'react-native-reanimated-slider';
+ * import { Value } from 'react-native-reanimated';
  * ...
  *
+ * const textRef = useRef()
+ * 
  * renderBallon=()=>(
  *  <View>
- *    <TextInput ref={this.text} />
+ *    <TextInput ref={textRef} />
  *  </View>
  * )
  *
  * setBallonText=(text)=>{
- *   this.text.setNativeProps({text})
+ *   textRef.setNativeProps({text})
  * }
  *
- * render(){
+ * currentTime= new Value(10)
+ * playableDuration= new Value(15)
+ * seekableDuration= new Value(20)
+ * 
+ * const slidingStart = ()=>{
+ *  console.log('slide started')
+ * }
+ * const slidingComplete = (number)=>{
+ *  console.log('slide completed' + number)
+ * }
+ * ...
  *   return (
  *     <Slider
  *       style={{ flex: 1 }}
  *       minimumTrackTintColor="#fff"
- *       thumbTintColor="#fff"
- *       ballon={value => this.convertSecondToTime(value)}
- *       progress={this.currentTime}
+ *       thumbTintColor="#f00"
+ *       borderColor="#0f0"
+ *       progress={currentTime}
  *       min={new Reanimated.Value(0)}
- *       cache={this.playableDuration}
- *       max={this.seekableDuration}
- *       onSlidingStart={this.slidingStart}
- *       onSlidingComplete={this.slidingComplete}
+ *       cache={playableDuration}
+ *       max={seekableDuration}
+ *       onSlidingStart={slidingStart}
+ *       onSlidingComplete={slidingComplete}
  *
  *       // only if you want to render custom ballon for sliding
- *       renderBallon={this.renderBallon}
- *       setBallonText={this.setBallonText}
+ *       // renderBallon={this.renderBallon}
+ *       // setBallonText={this.setBallonText}
  *     />
  *   )
- * }
  * ```
  *
  *
@@ -180,7 +193,7 @@ class Slider extends React.Component<Props> {
     this.clamped_x = cond(
       eq(this.width, 0),
       0,
-      interpolate(this.x, {
+      interpolateNode(this.x, {
         inputRange: [0, this.width],
         outputRange: [0, this.width],
         extrapolate: Extrapolate.CLAMP
@@ -205,8 +218,8 @@ class Slider extends React.Component<Props> {
         [
           call([this.value_x], x => {
             this.props.setBallonText
-              ? this.props.setBallonText(props.ballon(x[0]))
-              : this.ballon.current.setText(props.ballon(x[0]));
+              ? this.props.setBallonText(props.ballon? props.ballon(x[0]) : x[0].toFixed())
+              : this.ballon.current.setText(props.ballon? props.ballon(x[0]) : x[0].toFixed());
           }),
           cond(
             eq(this.gestureState, State.BEGAN),

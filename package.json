@@ -1,6 +1,6 @@
 {
   "name": "react-native-reanimated-slider",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "a reanimated slider for video players",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   },
   "peerDependencies": {
     "react-native-gesture-handler": "^1.x.x",
-    "react-native-reanimated": "^1.x.x"
+    "react-native-reanimated": "^2.x.x"
   },
   "dependencies": {
     "core-js": "2"

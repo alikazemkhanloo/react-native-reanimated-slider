@@ -13,11 +13,7 @@ first install and link `react-native-reanimated` and `react-native-gesture-handl
 ```
 yarn add react-native-reanimated-slider
 ```
-or 
-
-```
-npm i -s react-native-reanimated-slider
-```
+if your are using `react-native-reanimated@1.x.x` install version 1. version 1 is not supported anymore.
 ## Usage and API reference
 [Main Slider](https://github.com/alikazemkhanloo/react-native-reanimated-slider/tree/master/docs/Slider.md)
 
