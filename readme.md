@@ -8,7 +8,7 @@ The slider from the react-native is not good for video/audio players. If you sli
 
 
 ## install
-first install and link `react-native-reanimated` and `react-native-gesture-handler` and then install this packeage. ( I know you can install this packeage first :) )
+first install and link `react-native-reanimated` and `react-native-gesture-handler` and then install this packeage. they are installed by default in latest react-native.
 
 ```
 yarn add react-native-reanimated-slider
